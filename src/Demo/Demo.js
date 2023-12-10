@@ -1,21 +1,22 @@
-import React, { useMemo } from 'react';
+import React, { useMemo} from "react";
+import classes from "./Demo.module.css";
 
-import classes from './DemoList.module.css';
+const Demo = (props) => {
 
-const DemoList = (props) => {
-  const { items } = props;
-
-  const sortedList = useMemo(() => {
-    console.log('Items sorted');
-    return items.sort((a, b) => a - b);
-  }, [items]); 
-  console.log('DemoList RUNNING');
+  useMemo(()=>{if (props.order) {
+    console.log("Items sorted in descending");
+    props.items.sort((a, b) => b - a);
+  } else {
+    console.log("Items sorted in ascending");
+    props.items.sort((a, b) => a - b);
+  }
+},[props.order, props.items])
 
   return (
     <div className={classes.list}>
       <h2>{props.title}</h2>
       <ul>
-        {sortedList.map((item) => (
+        {props.items.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
@@ -23,4 +24,4 @@ const DemoList = (props) => {
   );
 };
 
-export default React.memo(DemoList);
+export default React.memo(Demo);
